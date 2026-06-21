@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!--Tailwind Link-->
+  <link rel="stylesheet" href="./src/output.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quiz App</title>
+</head>
+<body>
+
+  <div id="app" class="px-4 mt-12">
+
+    <!-- Quiz container -->
+    <div id="quiz-box">
+      <!--Heading/Instructions-->
+      <h1 class="text-3xl text-blue-900 font-bold text-center mb-4 mt-2">General Questions</h1>
+
+      <p class="text-gray-400 text-center mb-8">Pick the correct answer from the options provided. Click Next to continue. Your score will be shown at the end of the quiz.</p>
+    
+      <!--Questions Element-->
+      <h2 id="question" class="text-gray-500 text-2xl font-bolder mb-4">
+
+      </h2>
+      
+      <!--Options Element-->
+      <div id="options" class="flex flex-col items-start gap-3">
+        
+      </div>
+
+      <button id="next-button" class="bg-blue-900 text-white text-lg font-bold px-6 py-2 rounded-full m-6">Next</button>
+
+    </div>
+
+    <!-- Result screen -->
+    <div id="result-box" style="display:none;">
+      <h2>Quiz Completed</h2>
+      <p id="score-text"></p>
+      <button id="restart-btn">Restart</button>
+    </div>
+
+  </div>
+
+  <!--JAVASCRIPT-->
+  <script>
+  const questions = [
+  {
+    question: "What is 2 + 2?",
+    options: ["1", "2", "3", "4"],
+    answer: "4"
+  },
+  {
+    question: "What is the capital of Nigeria?",
+    options: ["Lagos", "Abuja", "Kano", "Ibadan"],
+    answer: "Abuja"
+  },
+  {
+    question: "Which language runs in the browser?",
+    options: ["Python", "C++", "JavaScript", "Java"],
+    answer: "JavaScript"
+  }
+];
+
+// STATE
+let currentIndex = 0;
+let score = 0;
+let selectedAnswer = null;
+
+// Grabbing Elements
+const questionEl = document.getElementById("question");
+const optionsEl = document.getElementById("options");
+const nextBtn = document.getElementById("next-button");
+
+const letters = ["A", "B", "C", "D"];
+
+function loadQuestion() {
+    const current = questions[currentIndex];
+
+    questionEl.textContent = current.question;
+
+    optionsEl.innerHTML = "";
+
+    current.options.forEach((option, index) => {
+        const label = document.createElement("label");
+        label.className = "flex items-center gap-3 cursor-pointer mb-2";
+
+        //radio input
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "quiz-option";
+        input.value = option;
+
+        input.addEventListener("change", () => {
+            selectedAnswer = option;
+        });
+
+        //letter options
+        const letter = document.createElement("span");
+        letter.textContent = `(${letters[index]})`;
+        letter.className = "font-bold w-6 text-center"
+
+        //option text
+        const text = document.createElement("span");
+        text.textContent = option;
+
+        label.appendChild(input);
+        label.appendChild(letter);
+        label.appendChild(text)
+
+        optionsEl.appendChild(label);
+    })
+}
+loadQuestion();
+
+//clicking on next button
+nextBtn.addEventListener("click", () => {
+    const current = questions[currentIndex];
+    if (!selectedAnswer) return;
+
+    if (selectedAnswer === current.answer) {
+        score++;
+    }
+
+    currentIndex++;
+    selectedAnswer = null;
+
+    if (currentIndex < questions.length) {
+        loadQuestion();
+    } else {
+        showResult();
+    }
+});
+
+//show result function
+const quizBox = document.getElementById("quiz-box");
+const resultBox = document.getElementById("result-box");
+const scoreText = document.getElementById("score-text");
+
+function showResult() {
+    quizBox.style.display = "none";
+    resultBox.style.display = "block";
+
+    scoreText.textContent = `You scored ${score} out of ${questions.length}`;
+}
+</script>
+</body>
+</html>
