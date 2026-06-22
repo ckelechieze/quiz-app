@@ -20,6 +20,10 @@
       <p class="text-gray-400 text-center mb-8">Pick the correct answer from the options provided. Click Next to continue. Your score will be shown at the end of the quiz.</p>
     
       <!--Questions Element-->
+      <!--Timer-->
+      <p id="timer" class="text-red-500 text-xl font-bold text-center mb-4">
+        Time Left: 60s
+      </p>
       <h2 id="question" class="text-gray-500 text-2xl font-bolder mb-4">
 
       </h2>
@@ -29,16 +33,16 @@
         
       </div>
 
-      <button id="next-button" class="bg-blue-900 text-white text-lg font-bold px-6 py-2 rounded-full m-6">Next</button>
+      <button id="next-button" class="bg-blue-900 text-white text-lg font-bold px-6 py-2 rounded-full m-6 disabled:opacity-30 disabled:cursor-not-allowed">Next</button>
 
     </div>
 
     <!-- Result screen -->
     <div id="result-box" class="flex flex-col items-center justify-center gap-6 mx-auto min-h-screen" style="display:none;">
-      <img src="./images/icon-check.svg" alt="">
+      <img class="animate-bounce" src="./images/icon-check.svg" alt="">
       <h2 class="text-3xl text-blue-900 font-bold mb-4 mt-2">Quiz Completed</h2>
       <p id="score-text" class="text-gray-500 font-bold text-xl"></p>
-      <button id="restart-btn" class="bg-blue-900 text-white text-lg font-bold px-6 py-2 rounded-full m-6">Restart</button>
+      <button id="restart-button" class="bg-blue-900 text-white text-lg font-bold px-6 py-2 rounded-full m-6">Restart</button>
     </div>
 
   </div>
@@ -68,12 +72,18 @@ let currentIndex = 0;
 let score = 0;
 let selectedAnswer = null;
 
+let timeLeft = 60;
+let timer;
+
 // Grabbing Elements
 const questionEl = document.getElementById("question");
 const optionsEl = document.getElementById("options");
 const nextBtn = document.getElementById("next-button");
+const restartBtn= document.getElementById("restart-button");
 
 const letters = ["A", "B", "C", "D"];
+
+nextBtn.disabled = true;
 
 function loadQuestion() {
     const current = questions[currentIndex];
@@ -94,6 +104,7 @@ function loadQuestion() {
 
         input.addEventListener("change", () => {
             selectedAnswer = option;
+            nextBtn.disabled = false;
         });
 
         //letter options
@@ -113,6 +124,8 @@ function loadQuestion() {
     })
 }
 loadQuestion();
+if (timer) clearInterval(timer);
+startTimer();
 
 //clicking on next button
 nextBtn.addEventListener("click", () => {
@@ -125,6 +138,7 @@ nextBtn.addEventListener("click", () => {
 
     currentIndex++;
     selectedAnswer = null;
+    nextBtn.disabled = true;
 
     if (currentIndex < questions.length) {
         loadQuestion();
@@ -143,6 +157,39 @@ function showResult() {
     resultBox.style.display = "flex";
 
     scoreText.textContent = `You scored ${score} out of ${questions.length}`;
+}
+
+//clicking on restart button
+restartBtn.addEventListener("click", () => {
+  currentIndex = 0;
+  score = 0;
+  selectedAnswer = null;
+  clearInterval(timer);
+
+  resultBox.style.display = "none";
+  quizBox.style.display = "block";
+
+  loadQuestion();
+  startTimer();
+});
+
+//Timer
+function startTimer() {
+  timeLeft = 30;
+
+  const timerEl = document.getElementById("timer");
+  timerEl.textContent = `Time Left: ${timeLeft}s`;
+
+  timer = setInterval(() => {
+    timeLeft--;
+
+    timerEl.textContent = `Time Left: ${timeLeft}s`;
+
+    if (timeLeft === 0) {
+      clearInterval(timer);
+      showResult();
+    }
+  }, 1000);
 }
 </script>
 </body>
