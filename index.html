@@ -34,10 +34,11 @@
     </div>
 
     <!-- Result screen -->
-    <div id="result-box" style="display:none;">
-      <h2>Quiz Completed</h2>
-      <p id="score-text"></p>
-      <button id="restart-btn">Restart</button>
+    <div id="result-box" class="flex flex-col items-center justify-center gap-6 mx-auto min-h-screen" style="display:none;">
+      <img src="./images/icon-check.svg" alt="">
+      <h2 class="text-3xl text-blue-900 font-bold mb-4 mt-2">Quiz Completed</h2>
+      <p id="score-text" class="text-gray-500 font-bold text-xl"></p>
+      <button id="restart-btn" class="bg-blue-900 text-white text-lg font-bold px-6 py-2 rounded-full m-6">Restart</button>
     </div>
 
   </div>
@@ -77,7 +78,7 @@ const letters = ["A", "B", "C", "D"];
 function loadQuestion() {
     const current = questions[currentIndex];
 
-    questionEl.textContent = current.question;
+    questionEl.textContent = `${currentIndex + 1}. ${current.question}`;
 
     optionsEl.innerHTML = "";
 
@@ -139,7 +140,7 @@ const scoreText = document.getElementById("score-text");
 
 function showResult() {
     quizBox.style.display = "none";
-    resultBox.style.display = "block";
+    resultBox.style.display = "flex";
 
     scoreText.textContent = `You scored ${score} out of ${questions.length}`;
 }
