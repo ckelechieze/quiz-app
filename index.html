@@ -21,7 +21,7 @@
     
       <!--Questions Element-->
       <!--Timer-->
-      <p id="timer" class="text-red-500 text-xl font-bold text-center mb-4">
+      <p id="timer" class="text-green-500 text-xl font-bold text-center mb-4">
         Time Left: 60s
       </p>
       <h2 id="question" class="text-gray-500 text-2xl font-bolder mb-4">
@@ -179,11 +179,16 @@ function startTimer() {
 
   const timerEl = document.getElementById("timer");
   timerEl.textContent = `Time Left: ${timeLeft}s`;
+  timerEl.style.color = "green";
 
   timer = setInterval(() => {
     timeLeft--;
 
     timerEl.textContent = `Time Left: ${timeLeft}s`;
+
+    if (timeLeft <= 10) {
+      timerEl.style.color = "red";
+    }
 
     if (timeLeft === 0) {
       clearInterval(timer);
