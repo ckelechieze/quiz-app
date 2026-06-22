@@ -51,14 +51,99 @@
   <script>
   const questions = [
   {
-    question: "What is 2 + 2?",
-    options: ["1", "2", "3", "4"],
-    answer: "4"
-  },
-  {
     question: "What is the capital of Nigeria?",
     options: ["Lagos", "Abuja", "Kano", "Ibadan"],
     answer: "Abuja"
+  },
+  {
+  question: "What color do you get when you mix red and blue?",
+  options: ["Green", "Purple", "Orange", "Yellow"],
+  answer: "Purple"
+  },
+  {
+    question: "Which Nigerian rice is the best?",
+    options: ["Abakaliki Rice", "Soloria Rice", "Adani Rice", "Ugwu-Hausa Rice"],
+    answer: "Soloria Rice"
+  },
+  {
+  question: "Select the largest organ in the human body.",
+  options: ["Heart", "Liver", "Skin", "Brain"],
+  answer: "Skin"
+  },
+  {
+  question: "What color do you get when you mix red and blue?",
+  options: ["Green", "Purple", "Orange", "Yellow"],
+  answer: "Purple"
+  },
+  {
+  question: "Identify the author of 'Romeo and Juliet'.",
+  options: ["Charles Dickens", "William Shakespeare", "Mark Twain", "Jane Austen"],
+  answer: "William Shakespeare"
+  },
+  {
+  question: "Select the planet with the most moons currently known.",
+  options: ["Jupiter", "Mars", "Saturn", "Neptune"],
+  answer: "Saturn"
+  },
+  {
+  question: "Choose the data structure that follows the Last-In, First-Out principle.",
+  options: ["Queue", "Stack", "Array", "Tree"],
+  answer: "Stack"
+  },
+  {
+  question: "Identify the country with the largest population in the world.",
+  options: ["India", "China", "United States", "Indonesia"],
+  answer: "India"
+  },
+  {
+  question: "Identify the process by which water vapor changes into liquid water.",
+  options: ["Evaporation", "Condensation", "Sublimation", "Melting"],
+  answer: "Condensation"
+  },
+  {
+  question: "A father and son are in a car crash. The father dies. At the hospital, the surgeon says, 'I can't operate on him; he's my son.' How is this possible?",
+  options: ["The surgeon is his mother", "The father survived", "The surgeon is his uncle", "The story is impossible"],
+  answer: "The surgeon is his mother"
+  },
+  {
+  question: "A plane crashes on the border between Nigeria and Ghana. Where should the survivors be buried?",
+  options: ["Nigeria", "Ghana", "Both countries", "Nowhere"],
+  answer: "Nowhere"
+  },
+  {
+  question: "Choose the correct answer: 30 divided by half plus 10.",
+  options: ["25", "40", "70", "15"],
+  answer: "70"
+  },
+  {
+  question: "Select the heavier item.",
+  options: ["1kg of feathers", "1kg of iron", "They weigh the same", "Cannot be determined"],
+  answer: "They weigh the same"
+  },
+  {
+  question: "A basket contains 6 apples. You take away 4. How many apples do you have?",
+  options: ["2", "4", "6", "10"],
+  answer: "4"
+  },
+  {
+  question: "How many months have 28 days?",
+  options: ["1", "2", "6", "12"],
+  answer: "12"
+  },
+  {
+  question: "Find the smallest prime number.",
+  options: ["0", "1", "2", "3"],
+  answer: "2"
+  },
+  {
+  question: "Name the largest continent on Earth.",
+  options: ["Africa", "Asia", "Europe", "Australia"],
+  answer: "Asia"
+  },
+  {
+  question: "Pick the largest planet in the solar system.",
+  options: ["Saturn", "Jupiter", "Earth", "Neptune"],
+  answer: "Jupiter"
   },
   {
     question: "Which language runs in the browser?",
@@ -72,7 +157,7 @@ let currentIndex = 0;
 let score = 0;
 let selectedAnswer = null;
 
-let timeLeft = 60;
+let timeLeft = 300;
 let timer;
 
 // Grabbing Elements
@@ -175,7 +260,7 @@ restartBtn.addEventListener("click", () => {
 
 //Timer
 function startTimer() {
-  timeLeft = 30;
+  timeLeft = 180;
 
   const timerEl = document.getElementById("timer");
   timerEl.textContent = `Time Left: ${timeLeft}s`;
