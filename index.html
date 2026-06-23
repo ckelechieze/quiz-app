@@ -18,6 +18,7 @@
       <h1 class="text-3xl text-blue-900 font-bold text-center mb-4 mt-2">General Questions</h1>
 
       <p class="text-gray-400 text-center mb-8">Pick the correct answer from the options provided. Click Next to continue. Your score will be shown at the end of the quiz.</p>
+      <p class="text-center text-gray-500 mb-4 text-lg">(Programmed by <a class="text-blue-600 tracking-widest hover:border border-teal-400 p-1 rounded-full" href="https://ckelechieze.github.io/my-personal-portfolio-assignment/">Kelechi Eze</a>)</p>
     
       <!--Questions Element-->
       <!--Timer-->
@@ -188,8 +189,61 @@ function loadQuestion() {
         input.value = option;
 
         input.addEventListener("change", () => {
-            selectedAnswer = option;
-            nextBtn.disabled = false;
+          selectedAnswer = option;
+
+          //disable all radio buttons after selection
+          const allInputs = document.querySelectorAll('input[name="quiz-option"]');
+          allInputs.forEach(radio => {
+            radio.disabled = true;
+          });
+
+          //highlight answers
+          const allLabels = optionsEl.querySelectorAll("label");
+          allLabels.forEach(label => {
+            const optionText = label.children[2].textContent;
+
+            const icon = document.createElement("span");
+            icon.className = "ml-auto font-bold text-lg";
+
+            //correct answer = green
+            if (optionText === current.answer) {
+              label.classList.add(
+                "bg-green-100",
+                "border",
+                "border-green-500",
+                "rounded",
+                "px-2",
+                "py-1"
+              );
+
+              icon.textContent = "✓";
+              icon.classList.add("text-green-600");
+
+              label.appendChild(icon);
+            }
+
+            //wrong answer = red
+            if(
+              optionText === selectedAnswer &&
+              selectedAnswer !== current.answer
+            ) {
+              label.classList.add(
+                "bg-red-100",
+                "border",
+                "border-red-500",
+                "rounded",
+                "px-2",
+                "py-1"
+            );
+
+            const wrongIcon = document.createElement("span");
+            wrongIcon.textContent = "✗";
+            wrongIcon.className = "ml-auto text-red-600 font-bold text-lg";
+
+            label.appendChild(wrongIcon);
+            }
+          });
+          nextBtn.disabled = false;
         });
 
         //letter options
